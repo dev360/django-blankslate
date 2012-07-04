@@ -1,13 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_main.html" %}
 {% load i18n %}
 
-
 {% block primary %}
-  <h1>{% trans "Registration Successful!" %}</h1>
-	<div class="form width-m top-aligned">
-		<div class="notice info">
-			<div class="wrap">
-				<p>You have successfully registered to the site. You can now log in below.</p>
-			</div>
-		</div>
+  <h2>{% trans "Registration Successful!" %}</h2>
+  <p>{% trans "You have successfully registered to the site. You can now log in below." %}</p>
 {% endblock primary %}

@@ -1,1 +1,1 @@
-Activate your account with XYZ
+Activate your account with {{ SITE_NAME }}

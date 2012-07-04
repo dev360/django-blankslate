@@ -108,6 +108,7 @@ LANGUAGES = (
 
 LOGIN_REDIRECT_URL = '/profile/'
 
+SITE_NAME = 'Blankslate'
 
 from settingslocal import *
 
@@ -116,3 +117,4 @@ from settingslocal import *
 DEBUG = True if ENVIRONMENT == 'dev' else False
 TEMPLATE_DEBUG = DEBUG
 
+MEDIA_URL = '{0}/media/'.format(BASE_URL)

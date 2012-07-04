@@ -16,7 +16,8 @@ DATABASES = {
 # Change this secret key for each environment.
 SECRET_KEY = 'z+@xf!gwjjclm$z1hhi!@p@46f6yn_c)t+)_zpx8zo$#(v$n(l'
 
-MEDIA_URL = 'http://development.blankslate.com:8000/media/'
+BASE_URL = 'http://development.blankslate.com:8000'
+MEDIA_URL = '{0}/media/'.format(BASE_URL)
 
 #
 # Email settings - assuming gmail.

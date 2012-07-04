@@ -1,4 +1,4 @@
-Someone - hopefully you - registered a new account at XYZ with this email address. If it was you, and if you want to activate your account, then click the link below or copy and paste it into your web browser's addressbar:
+Someone - hopefully you - registered a new account at {{ SITE_NAME }} with this email address. If it was you, and if you want to activate your account, then click the link below or copy and paste it into your web browser's addressbar:
  	
 	http://127.0.0.1/users/activate/{{ activation_key }}/
 
