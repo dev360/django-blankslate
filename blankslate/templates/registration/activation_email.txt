@@ -1,0 +1,5 @@
+Someone - hopefully you - registered a new account at XYZ with this email address. If it was you, and if you want to activate your account, then click the link below or copy and paste it into your web browser's addressbar:
+ 	
+	http://127.0.0.1/users/activate/{{ activation_key }}/
+
+If you didn't register this account, or if you registered it in error, then you don't need to do anything. You will not receive any more emails from us and the user account will be removed automatically in {{ expiration_days }} days.

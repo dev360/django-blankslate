@@ -1,0 +1,29 @@
+{% extends "base_full.html" %}
+{% load i18n %}
+
+{% block primary %}
+  <div class="hero-unit">
+	  <h2>{% trans "Register" %}</h2>
+    <p>{% trans "Complete the registration below to create an account" %}</p>
+    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="form-horizontal">{% csrf_token %}{% block form_top %}{% endblock %}
+      {% csrf_token %}
+    {% if form.errors %}<div class="alert alert-error">
+      {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %}
+
+      {{ form.non_field_errors }}
+      </div>{% endif %}
+      <fieldset>
+        {% for field in form %}
+          {% include "forms/field.html" %}
+        {% endfor %}
+        <div class="form-actions">
+          <input class=" btn btn-primary" type="submit" value="{% trans "Register" %}" />
+        </div>
+      </fieldset>
+    </form>
+	</div>
+{% endblock %}
+
+{% block secondary %}
+	
+{% endblock %}

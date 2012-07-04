@@ -1,0 +1,13 @@
+{% load utils %}
+          <div class="form-row address1 wide">
+            {{ form|formfields:"address1" }}
+          </div>
+          <div class="form-row address2 wide">
+            {{ form|formfields:"address2" }}
+          </div>
+          <div class="form-row city-state-zip wide">
+            {{ form|formfields:"city" }}
+          </div>
+          <div class="form-row city-state-zip">
+            {{ form|formfields:"state, zip_code" }}
+          </div>

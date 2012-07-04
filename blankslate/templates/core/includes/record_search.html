@@ -1,0 +1,47 @@
+{% load i18n utils %}
+    <div class="form width-l top-aligned">
+      <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+        {% csrf_token %}
+      {% if form.errors %}
+        <div class="notice error">
+          <div class="wrap">
+              <p>
+              {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %}
+              </p>
+          </div>
+        </div>
+          {{ form.non_field_errors }}
+      {% endif %}
+
+
+        <fieldset>
+          <h3>Search by Transactions</h3>
+          <div class="form-row">
+            {{ form|formfields:"record_number,folio_number" }}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <h3>Search by Property</h3>
+          <div class="form-row">
+            {{ form|formfields:"address1" }}
+          </div>
+          <div class="form-row">
+            {{ form|formfields:"address2" }}
+          </div>
+<div class="form-row">
+            {{ form|formfields:"city, state, zip_code" }}
+          </div>
+        </fieldset>
+
+      {% block after_field_sets %}{% endblock %}
+
+      {% block submit-row %}
+          <div class="actions">
+          <span class="primary btn ()"><input type="submit" value="{% trans "Search Records" %}" /></span>
+          </div>
+      {% endblock %}
+
+        </form>
+    </div>
+  

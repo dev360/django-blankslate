@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load i18n utils %}
+
+{% block primary %}
+  <div class="section profile edit">
+    <h1>Manage Profile</h1>
+
+    <div class="form width-l top-aligned">
+      <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+        {% csrf_token %}
+
+      {% if saved %}
+        <div class="notice info">
+          <div class="wrap">
+              <p>
+              {% trans "Your changes have been saved." %}
+              </p>
+          </div>
+        </div>
+      {% endif %}
+      {% if validation_error %}
+        <div class="notice error">
+          <div class="wrap">
+              <p>
+              {% trans "Please correct the errors below:" %}
+              </p>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="notice error">
+          <div class="wrap">
+              <p>
+              {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %}
+              </p>
+          </div>
+        </div>
+          {{ form.non_field_errors }}
+      {% endif %}
+
+
+        <fieldset>
+          <h3>General information</h3>
+          <div class="form-row names">
+            {{ form|formfields:"first_name,middle_name,last_name" }}
+          </div>      
+          <div class="form-row names">
+            {{ form|formfields:"company" }}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <h3>Contact information</h3>
+          <div>
+              <h4>Phone Numbers</h4>    
+          </div>
+          <div>
+              {% include "core/includes/phonenumber_form.html" with form=phone1_form %}
+          </div>
+          <div>
+              {% include "core/includes/phonenumber_form.html" with form=phone2_form %}
+          </div>
+          <div>
+              {% include "core/includes/phonenumber_form.html" with form=phone3_form %}
+          </div>
+          <div>
+              <h4>Physical Address</h4>
+              {% include "core/includes/address_form.html" with form=address1_form %}
+          </div>
+          <div>
+              <h4>Mailing Address</h4>
+              <div class="form-row">
+                  {{ form|formfields:"same_address" }}
+              </div>
+              <div id="mailing-address">
+              {% include "core/includes/address_form.html" with form=address2_form %}
+          </div>
+        </fieldset>
+        <fieldset>
+          <h3>Professional Certification</h3>
+          <div class="form-row">
+            {% if profile.has_certifications %}
+            {% else %}        
+              <div class="notice">
+                <div class="wrap">
+                  <p>You have not uploaded your current certification(s).</p>
+                </div>
+              </div>
+                  {% with records_form as form %}
+                    {% include "core/includes/certification_form.html" %}
+                  {% endwith %}
+            {% endif %}
+          </div>
+        </fieldset>
+
+
+      {% block after_field_sets %}{% endblock %}
+
+      {% block submit-row %}
+          <div class="actions">
+          <span class="primary btn ()"><input type="submit" value="{% trans "Save Profile" %}" /></span>
+          </div>
+      {% endblock %}
+
+        </form>
+    </div>
+
+    <div id="certification-confirm" title="Do you want to leave this page?" style="display: none;">
+      <p>Test</p>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include "core/includes/user_menu.html" %}
+{% endblock %}

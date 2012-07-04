@@ -1,0 +1,7 @@
+{% load utils %}
+          <div class="form-row names">
+           {{ form|formfields:"first_name,last_name" }}
+          </div>
+          <div class="form-row wide">
+           {{ form|formfields:"email" }}
+          </div>

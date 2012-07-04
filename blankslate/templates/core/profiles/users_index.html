@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n utils %}
+
+{% block primary %}
+  <div class="section users index">
+    <h1>Manage Users</h1>
+
+    <div class="form inivite-user width-l top-aligned">
+      <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+        {% csrf_token %}
+
+      {% if saved %}
+        <div class="notice info">
+          <div class="wrap">
+              <p>
+              {% trans "Your changes have been saved." %}
+              </p>
+          </div>
+        </div>
+      {% endif %}
+      {% if validation_error %}
+        <div class="notice error">
+          <div class="wrap">
+              <p>
+              {% trans "Please correct the errors below:" %}
+              </p>
+          </div>
+        </div>
+      {% endif %}
+
+        <fieldset>
+          <h3>Invite New Users</h3>
+          <div class="form-row">
+            {% include "core/includes/invite_user_form.html" with form=invite_user1_form %}
+
+          </div>
+        </fieldset>
+
+
+      {% block after_field_sets %}{% endblock %}
+
+      {% block submit-row %}
+          <div class="actions">
+          <span class="secondary btn ()"><input type="submit" value="{% trans "Save Profile" %}" /></span>
+          </div>
+      {% endblock %}
+
+        </form>
+    </div>
+
+    <div id="certification-confirm" title="Do you want to leave this page?" style="display: none;">
+      <p>Test</p>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include "core/includes/user_menu.html" %}
+{% endblock %}
+

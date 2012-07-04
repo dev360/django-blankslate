@@ -1,0 +1,13 @@
+{% load utils %}
+            <div class="form-row organization">
+              {{ form|formfields:"party_type" }}
+            </div>
+            <div class="form-row organization">
+              {{ form|formfields:"organization" }}
+            </div>
+            <div class="form-row names">
+              {{ form|formfields:"first_name,last_name" }}
+            </div>
+            <div class="form-row names">
+              {{ form|formfields:"spouse_first_name,spouse_last_name" }}
+            </div>

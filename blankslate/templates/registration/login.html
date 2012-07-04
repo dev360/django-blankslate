@@ -1,0 +1,33 @@
+{% extends "base_full.html" %}
+{% load i18n %}
+
+{% block primary %}
+  <div class="hero-unit">
+    <h2>{% trans "Login" %}</h2>
+
+		{% if next %}
+      <p>The page you tried to reach requires you to login before you can access it. Please enter your credentials in the form below.</p>
+    {% else %}
+      <p>Please enter your email address and password below</p>
+		{% endif %}
+    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="form-horizontal">{% csrf_token %}{% block form_top %}{% endblock %}
+      {% csrf_token %}
+    {% if form.errors %}<div class="alert alert-error">
+      {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %}
+
+      {{ form.non_field_errors }}
+      </div>{% endif %}
+      <fieldset>
+        {% for field in form %}
+          {% include "forms/field.html" %}
+        {% endfor %}
+        <div class="form-actions">
+          <input class=" btn btn-primary" type="submit" value="{% trans "Login" %}" />
+          <a href="{% url auth_password_reset %}" class="btn">{% trans "Password reset" %}</a>
+        </div>
+      </fieldset>
+    </form>
+	</div>
+{% endblock %}
+
+
