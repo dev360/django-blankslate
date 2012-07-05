@@ -7,6 +7,7 @@ from api import resources
 
 v1_api = Api(api_name='1.0')
 v1_api.register(resources.ProfileResource())
+v1_api.register(resources.AccountResource())
 #v1_api.register(resources.PhonenumberResource())
 #v1_api.register(resources.AddressResource())
 

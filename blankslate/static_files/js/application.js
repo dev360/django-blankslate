@@ -4,9 +4,10 @@ if (window.location.hash == "#_")
 
 // Provide top-level namespaces for our javascript.
 (function() {
-  window.rf = {}
+  window.blankslate = {}
 
   // Set the class namespaces
+  blankslate.forms = {};
   blankslate.routers = {};
   blankslate.models = {};
   blankslate.views = {};
@@ -17,6 +18,9 @@ if (window.location.hash == "#_")
   blankslate.app.routers = {};
   blankslate.app.ui = {};
   blankslate.app.data = {}; 
+
+
+
 
 })();
 

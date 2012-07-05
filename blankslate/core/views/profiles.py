@@ -89,9 +89,6 @@ def profile_edit(request):
     phone2_form = PhonenumberForm(instance=phone2, prefix='phone2', always_valid=True)
     phone3_form = PhonenumberForm(instance=phone3, prefix='phone3', always_valid=True)
 
-    certification, created = NotaryProfile.objects.get_or_create(profile=profile)
-    certification_form = NotaryCertificationForm(instance=certification, initial={ 'profile': profile })
-
     saved = False
     validation_error = False
 
@@ -186,7 +183,6 @@ def profile_edit(request):
     args['phone3_form'] = phone3_form
     args['address1_form'] = address1_form
     args['address2_form'] = address2_form
-    args['certification_form'] = certification_form
 
     args['saved'] = saved
     args['validation_error'] = validation_error

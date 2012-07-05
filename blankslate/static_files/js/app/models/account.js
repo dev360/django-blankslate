@@ -3,26 +3,26 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  blankslate.models.Profile = (function(_super) {
+  blankslate.models.Account = (function(_super) {
 
-    __extends(Profile, _super);
+    __extends(Account, _super);
 
-    function Profile() {
-      return Profile.__super__.constructor.apply(this, arguments);
+    function Account() {
+      return Account.__super__.constructor.apply(this, arguments);
     }
 
-    Profile.prototype.defaults = {
+    Account.prototype.defaults = {
       id: ""
     };
 
-    Profile.prototype.url = function() {
-      return "/api/1.0/account/profile/?format=json";
+    Account.prototype.url = function() {
+      var id;
+      id = this.get('id');
+      return "/api/1.0/account/?format=json";
     };
 
-    return Profile;
+    return Account;
 
   })(Backbone.Model);
-
-  blankslate.app.data.profile = new blankslate.models.Profile();
 
 }).call(this);

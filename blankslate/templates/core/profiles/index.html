@@ -4,8 +4,7 @@
 {% block primary %}
   <div class="section">
     <h1>Welcome, {{user.username}}</h1>
-    {% with records_form as form %}
-      {% include "core/includes/record_search.html" %}
+    {% with someform_form as form %}
     {% endwith %}
   </div>
 {% endblock %}

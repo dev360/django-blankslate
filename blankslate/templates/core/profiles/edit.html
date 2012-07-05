@@ -4,41 +4,41 @@
 {% block primary %}
   <div class="section profile edit">
     <h1>Manage Profile</h1>
+    <hr />
+
+    <div id="account-form">
+    </div>
 
     <div class="form width-l top-aligned">
       <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
         {% csrf_token %}
 
       {% if saved %}
-        <div class="notice info">
-          <div class="wrap">
-              <p>
-              {% trans "Your changes have been saved." %}
-              </p>
-          </div>
+        <div class="alert alert-success">
+          {% trans "Your changes have been saved." %}
         </div>
       {% endif %}
       {% if validation_error %}
-        <div class="notice error">
-          <div class="wrap">
-              <p>
-              {% trans "Please correct the errors below:" %}
-              </p>
-          </div>
+        <div class="alert alert-error">
+          {% trans "Please correct the errors below:" %}
         </div>
       {% endif %}
 
       {% if form.errors %}
-        <div class="notice error">
-          <div class="wrap">
-              <p>
-              {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %}
-              </p>
-          </div>
-        </div>
+        <div class="alert alert-error">
+          {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %} 
           {{ form.non_field_errors }}
+        </div>
       {% endif %}
 
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#">{% trans "General Information" %}</a></li>
+          <li><a href="#">{% trans "Contact Information" %}</a></li>
+          <li><a href="#">...</a></li>
+        </ul>
+
+        
 
         <fieldset>
           <h3>General information</h3>
@@ -68,7 +68,7 @@
               <h4>Physical Address</h4>
               {% include "core/includes/address_form.html" with form=address1_form %}
           </div>
-          <div>
+          <div class="control-group">
               <h4>Mailing Address</h4>
               <div class="form-row">
                   {{ form|formfields:"same_address" }}
@@ -76,33 +76,11 @@
               <div id="mailing-address">
               {% include "core/includes/address_form.html" with form=address2_form %}
           </div>
-        </fieldset>
-        <fieldset>
-          <h3>Professional Certification</h3>
-          <div class="form-row">
-            {% if profile.has_certifications %}
-            {% else %}        
-              <div class="notice">
-                <div class="wrap">
-                  <p>You have not uploaded your current certification(s).</p>
-                </div>
-              </div>
-                  {% with records_form as form %}
-                    {% include "core/includes/certification_form.html" %}
-                  {% endwith %}
-            {% endif %}
-          </div>
-        </fieldset>
 
-
-      {% block after_field_sets %}{% endblock %}
-
-      {% block submit-row %}
-          <div class="actions">
-          <span class="primary btn ()"><input type="submit" value="{% trans "Save Profile" %}" /></span>
-          </div>
-      {% endblock %}
-
+            <div class="form-actions">
+              <span class="primary btn ()"><input type="submit" value="{% trans "Save Profile" %}" /></span>
+            </div>
+          </fieldset>
         </form>
     </div>
 

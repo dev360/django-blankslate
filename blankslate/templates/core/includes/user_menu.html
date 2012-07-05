@@ -1,17 +1,8 @@
 {% load i18n %}
-  <div class="profile-menu navigation">
-
-    <h3>Mortgage Records</h3>
-		<ul>
-      <li><a href="{% url record-search %}">{% trans "Search Records" %}</a></li>
-      <li><a href="{% url record-create %}">{% trans "Create Record" %}</a></li>
-    </ul>
-
-    <h3>Account Management</h3>
-		<ul>
-      <li><a href="{% url profile-edit %}">{% trans "Manage Profile" %}</a></li>
-      <li><a href="{% url users-index %}">{% trans "Manage Users" %}</a></li>
-      <li><a href="{% url billing-plans %}">{% trans "Billing" %}</a></li>
-      <li><a href="{% url billing-history %}">{% trans "Account History" %}</a></li>
-    </ul>
-	</div>
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Account Management</li>
+              <li><a href="{% url profile-edit %}">{% trans "Manage Profile" %}</a></li>
+              <li><a href="{% url users-index %}">{% trans "Manage Users" %}</a></li>
+            </ul>
+          </div><!--/.well -->

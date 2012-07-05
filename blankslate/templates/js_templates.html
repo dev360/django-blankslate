@@ -1,0 +1,43 @@
+<script type="text/template" id="form-template">
+
+
+
+</script>
+
+
+<script type="text/template" id="form-fieldset-template"> 
+    <fieldset>
+      
+    </fieldset>
+</script>
+
+
+<script type="text/template" id="form-field-template"> 
+      <label class="control-label" for="<%= id %>"><%= label %></label>
+      <div class="controls">
+      <% if(type=='input["text"]') { %><input type="text" value="<%= value %>" maxlength="<%= maxLength %>" /><% }%>
+      <% if(type=='input["email"]') { %><input type="email" value="<%= value %>" maxlength="<%= maxLength %>" /><% }%>
+      
+      <% if(errors.length > 0) { %>
+        <span class="help-inline">
+        <% for(i=0; i<errors.length; i++) { %>
+          <%= errors[i][0] %>
+        <% } %>
+        </span>
+      <% } %>
+
+      </div>
+</script>
+
+<script type="text/template" id="account-template">
+    <h1>Test</h1>
+    <form class="form-horizontal">
+      <div class="placeholder">
+      </div>
+      <fieldset>
+        <div class="form-actions">
+          <btn class="btn btn-primary">Save</btn>
+        </div>
+      </fieldset>
+    </form>
+</script>
