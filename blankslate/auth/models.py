@@ -297,7 +297,3 @@ class Profile(GUIDModel):
         verbose_name = _('user profile')
         verbose_name_plural = _('user profiles')
 
-
-
-
-class UserInvitation()
