@@ -195,12 +195,3 @@ def profile_search(request):
     return render_to_response('auth/index.html', {'profiles': profiles}, RequestContext(request))
 
 
-@login_required
-def users_index(request):
-    users = []
-
-    args = {}
-    args['invite_user1_form'] = UserInvitationForm()
-
-    return render_to_response('auth/profiles/users_index.html', args, RequestContext(request))
-

@@ -18,12 +18,30 @@ from auth.forms import UserInvitationForm
 
 
 @login_required
-def users_invite(request):
+def users_index(request):
     users = []
 
+    args = dict(users = users)
+    return render_to_response('auth/users/users_index.html', args, RequestContext(request))
+
+
+
+@login_required
+def users_invites(request):
+
+    created = False
+
+    users = []
     args = {}
-    args['invite_user1_form'] = InviteUserForm()
+    invite_form1 = UserInvitationForm(user=request.user)
 
-    return render_to_response('auth/profiles/users_index.html', args, RequestContext(request))
+    if request.method == 'POST':
+        invite_form1 = UserInvitationForm(request.POST, user=request.user)
 
+        if invite_form1.is_valid():
+            invite_form1.save()
+            invite_form1 = UserInvitationForm(user=request.user)
+
+    args['invite_form1'] = invite_form1
+    return render_to_response('auth/users/users_invites.html', args, RequestContext(request))
 

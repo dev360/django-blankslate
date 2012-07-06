@@ -1,0 +1,5 @@
+        <span class="control-group{% if field.field.required %} required{% endif %}{% if field.errors %} error{% endif %}">
+        {{ field }}
+
+        {% for error in field.errors %}<p class="help-block">{{ error }}</p>{% endfor %}
+        </span>

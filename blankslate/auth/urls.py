@@ -43,12 +43,10 @@ urlpatterns = patterns('',
     # Profiles
     url(r'^profile/$', views.profile_index, name='profile-index'),
     url(r'^profile/edit/$', views.profile_edit, name='profile-edit'),
-    url(r'^profile/users/$', views.users_index, name='users-index'),
-
-    # Invitations
-    url(r'^profile/users/invite/$', views.users_invite, name='users-invite'),
 
     # User management
+    url(r'^profile/users/$', views.users_index, name='users-index'),
+    url(r'^profile/users/invitations/$', views.users_invites, name='users-invites'),
 
 )
 

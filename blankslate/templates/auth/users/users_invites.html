@@ -4,12 +4,12 @@
 {% block primary %}
   <div class="section">
     <h1>{% trans "Manage Users" %}</h1>
-    {% with invite_user1_form as form %}
+    {% with invite_form1 as form %}
     <h3>Inivite Users</h3>
     <p>You can invite users to join
     this organization by entering their
     information below</p>
-    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="well form-inline">{% csrf_token %}{% block form_top %}{% endblock %}
+    <form id="invite-user" {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="well form-inline">{% csrf_token %}{% block form_top %}{% endblock %}
       {% csrf_token %}
 
       {% if form.errors %}
@@ -24,10 +24,7 @@
       </div>{% endif %}
 
       {% for field in form %}
-        <span>
-        {{ field }}
-        {{ field.errors }}
-        </span>
+        {% include "forms/inline_field.html" %}
       {% endfor %}
       <input type="submit" value="Invite" class="btn btn-primary" />
     </form>

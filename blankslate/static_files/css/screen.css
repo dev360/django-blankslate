@@ -1,0 +1,7 @@
+
+/* Inline forms */
+.form-inline .control-group { display: inline-block; vertical-align: top; }
+.form-inline .control-group p.help-block { margin-top: 3px; }
+
+#invite-user .control-group input { width: 130px; }
+

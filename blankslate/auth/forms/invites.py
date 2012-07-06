@@ -12,11 +12,12 @@ from utils import forms
 class UserInvitationForm(forms.ModelForm):
     """ This form is for adding/editing the profile """
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super(UserInvitationForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs = { 'placeholder': self.fields['first_name'].label }
         self.fields['last_name'].widget.attrs = { 'placeholder': self.fields['last_name'].label }
         self.fields['email'].widget.attrs = { 'placeholder': self.fields['email'].label }
-
+        self.user = user
 
     def save(self, user=None):
         if not user:
@@ -42,23 +43,27 @@ class UserInvitationForm(forms.ModelForm):
 
         try:
             user = User.objects.get(email__iexact=data)
-
-            try:
-                user_organization = user.user_organizations.all()[0]
-            except IndexError:
-                user_organization = None
-
-            try:
-                your_organization = request.user.user_organizations.all()[0]
-            except IndexError:
-                your_organization = None
-
-            if user_organization and user_organization == your_organization:
-                raise forms.ValidationError(_('The user is already in your organization.'))
-            else:
-                raise forms.ValidationError(_('The user already belongs to another organization.'))
+            raise forms.ValidationError(_('The user is already a member.'))
 
         except User.DoesNotExist:
-            return data
+            pass
+
+        try:
+            invitation = UserInvitation.objects.get(user=self.user, email__iexact=data)
+            raise forms.ValidationError(_('You have already invited the user.'))
+
+        except UserInvitation.DoesNotExist:
+            pass
+
+        return data
+
+    def save(self, *args, **kwargs):
+        kwargs['commit'] = False
+        invitation = super(UserInvitationForm, self).save(*args, **kwargs)
+        invitation.user = self.user
+        invitation.save()
+        return invitation
+
+
     class Meta:
         model = UserInvitation
