@@ -4,9 +4,13 @@
 {% block primary %}
   <div class="section">
     <h1>{% trans "Manage Users" %}</h1>
+    <br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{% trans "Users" %}</a></li>
+      <li><a href="{% url users-invites %}">{% trans "Invitations" %}</a></li>
+    </ul>
 
 
-    <hr />
   </div>
 {% endblock %}
 

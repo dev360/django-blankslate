@@ -4,7 +4,11 @@
 {% block primary %}
   <div class="section profile edit">
     <h1>Manage Profile</h1>
-    <hr />
+    <br />
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{% trans "Profile" %}</a></li>
+      <li><a href="#">{% trans "Contact" %}</a></li>
+    </ul>
 
     <div id="account-form">
     </div>
@@ -32,11 +36,7 @@
       {% endif %}
 
 
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#">{% trans "General Information" %}</a></li>
-          <li><a href="#">{% trans "Contact Information" %}</a></li>
-          <li><a href="#">...</a></li>
-        </ul>
+
 
         
 

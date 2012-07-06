@@ -13,7 +13,7 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from auth.models import Profile, Organization, Address, Phonenumber
+from auth.models import Profile, UserInvitation
 from auth.forms import UserInvitationForm
 
 
@@ -31,7 +31,7 @@ def users_invites(request):
 
     created = False
 
-    users = []
+    users = UserInvitation.objects.filter(user=request.user)
     args = {}
     invite_form1 = UserInvitationForm(user=request.user)
 
@@ -42,6 +42,9 @@ def users_invites(request):
             invite_form1.save()
             invite_form1 = UserInvitationForm(user=request.user)
 
-    args['invite_form1'] = invite_form1
+    args = dict(
+        invite_form1 = invite_form1,
+        users = users
+    )
     return render_to_response('auth/users/users_invites.html', args, RequestContext(request))
 

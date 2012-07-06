@@ -4,6 +4,12 @@
 {% block primary %}
   <div class="section">
     <h1>{% trans "Manage Users" %}</h1>
+    <br />
+    <ul class="nav nav-tabs">
+      <li><a href="{% url users-index %}">{% trans "Users" %}</a></li>
+      <li class="active"><a href="{% url users-invites %}">{% trans "Invitations" %}</a></li>
+    </ul>
+
     {% with invite_form1 as form %}
     <h3>Inivite Users</h3>
     <p>You can invite users to join
@@ -32,6 +38,38 @@
     {% endwith %}
 
     <hr />
+
+    {% if users %} 
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{% trans "First Name" %}</th>
+          <th>{% trans "Last Name" %}</th>
+          <th>{% trans "Email" %}</th>
+          <th>{% trans "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        
+         {% for invite in users %}
+        <tr>
+          <td>{{ invite.first_name }}</td>
+          <td>{{ invite.last_name }}</td>
+          <td>{{ invite.email }}</td>
+          <td>{{ invite.get_status_display }}</td>
+        </tr>
+         {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <div class="alert alert-info">
+        {% trans "You do not have any invitations yet" %}
+      </div>
+    {% endif %}
+
+
+
   </div>
 {% endblock %}
 
