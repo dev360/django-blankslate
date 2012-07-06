@@ -18,7 +18,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 from django.conf import settings
 
-from core.models import Profile
+from auth.models import Profile
 from auth.forms import AuthenticationForm, RegistrationForm
 
 

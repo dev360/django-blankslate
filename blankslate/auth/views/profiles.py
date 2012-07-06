@@ -13,8 +13,8 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from core.models import Profile, Organization, Address, Phonenumber
-from core.forms import ProfileForm, AddressForm, PhonenumberForm
+from auth.models import Profile, Organization, Address, Phonenumber
+from auth.forms import ProfileForm, AddressForm, PhonenumberForm
 
 
 

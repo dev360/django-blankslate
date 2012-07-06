@@ -13,7 +13,7 @@ from tastypie.utils import trailing_slash
 
 from .base import ModelResource, DjangoAuthentication
 
-from core.models import Profile, Address, Phonenumber
+from auth.models import Profile, Address, Phonenumber
 
 log = logging.getLogger(__name__)  # Get an instance of a logger
 

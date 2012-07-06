@@ -39,6 +39,12 @@ urlpatterns = patterns('',
         auth_views.password_reset_done,
         name='auth_password_reset_done'),
 
+
+    # Profiles
+    url(r'^profile/$', views.profile_index, name='profile-index'),
+    url(r'^profile/edit/$', views.profile_edit, name='profile-edit'),
+    url(r'^profile/users/$', views.users_index, name='users-index'),
+
     # Invitations
 
     # User management

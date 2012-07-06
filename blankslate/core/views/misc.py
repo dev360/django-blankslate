@@ -18,7 +18,6 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 from django.conf import settings
 
-from core.models import Profile
 
 def index(request):
     return render_to_response('core/index.html', {}, RequestContext(request))
