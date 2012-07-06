@@ -146,12 +146,3 @@ class AuthenticationForm(forms.Form):
     def get_user(self):
         return self.user_cache
 
-
-class PasswordResetForm(forms.Form):
-
-    pass
-
-
-
-
-

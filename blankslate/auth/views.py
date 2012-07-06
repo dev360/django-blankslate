@@ -19,7 +19,7 @@ from django.template import RequestContext
 from django.conf import settings
 
 from core.models import Profile
-from auth.forms import AuthenticationForm, RegistrationForm, PasswordResetForm
+from auth.forms import AuthenticationForm, RegistrationForm
 
 
 def index(request):
@@ -75,29 +75,6 @@ def activate(request, activation_key):
 
 def activate_success(request):
     return render_to_response('auth/activate_success.html', { }, RequestContext(request))
-
-
-def password_reset(request):
-    form = PasswordResetForm()
-
-    if request.method == 'POST':
-        form = PasswordResetForm(request.POST)
-
-        if form.is_valid():
-            # Send email to user with
-            # activation instructions.
-            form.send_email()
-            return render_to_response('auth/password_reset_sent.html', RequestContext(request))
-
-
-    return render_to_response('auth/password_reset.html', { 'form': form }, RequestContext(request))
-
-
-def password_form(request, profile_id, code):
-
-
-
-    return render_to_response('auth/password_form.html', { }, RequestContext(request))
 
 
 def logout(request):
