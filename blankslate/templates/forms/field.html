@@ -1,4 +1,18 @@
+{% load utils %}
   <div class="control-group{% if field.field.required %} required{% endif %}{% if field.errors %} error{% endif %}">
+  {% if field|field_type:"checkboxinput" %}
+    {% if field.is_readonly %}
+    <p>{{ field.contents }}</p>
+    {% else %}
+    <div class="controls">
+      <label class="checkbox">
+        {{ field }}
+        {{ field.label }}
+      </label>
+    {% for error in field.errors %}<span class="help-inline">{{ error }}</span>{% endfor %}
+    </div>
+    {% endif %}
+  {% else %}
     <label class="control-label" for="{{ field.auto_id }}">{{ field.label }}</label>
     {% if field.is_readonly %}
     <p>{{ field.contents }}</p>
@@ -7,5 +21,6 @@
       {{ field }}
     {% for error in field.errors %}<span class="help-inline">{{ error }}</span>{% endfor %}
     </div>
+    {% endif %}
   {% endif %}
   </div>

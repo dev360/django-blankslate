@@ -19,13 +19,12 @@ from django.template import RequestContext
 from django.conf import settings
 
 from core.models import Profile
-from core.forms import AuthenticationForm, RegistrationForm
 
+def index(request):
+    return render_to_response('core/index.html', {}, RequestContext(request))
 
 def terms_of_service(request):
     return render_to_response('core/misc/terms_of_service.html', {}, RequestContext(request))
-
-
 
 def privacy_policy(request):
     return render_to_response('core/misc/privacy_policy.html', {}, RequestContext(request))

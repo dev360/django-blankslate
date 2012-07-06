@@ -27,14 +27,11 @@ class SessionMixin(object):
                     "for logging in."))
         return result
 
-MEMBERTYPE_CHOICES = (
-    ('', _('Select a member type')),
-    # Add more as needed.
-)
 
 class RegistrationForm(forms.FormMixin, RegistrationFormUniqueEmail):
 
-    # member_type = forms.CharField(label=_('Member type'), max_length=10, widget=Select(choices=MEMBERTYPE_CHOICES))
+    accepted_terms = forms.BooleanField(label=mark_safe(u'I accept the '
+            u'<a href="/terms/">terms and conditions</a>'), required=True)
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
@@ -42,8 +39,7 @@ class RegistrationForm(forms.FormMixin, RegistrationFormUniqueEmail):
         self.fields['email'].label = _('Email address')
         self.fields['password1'].label = _('Password')
         self.fields['password2'].label = _('Password (again)')
-        accepted_terms = forms.BooleanField(label=mark_safe(u'I accept the '
-            u'<a href="/terms/">terms and conditions</a>'), required=True)
+
 
     def clean_username(self):
         data = self.cleaned_data['username']
@@ -52,6 +48,7 @@ class RegistrationForm(forms.FormMixin, RegistrationFormUniqueEmail):
             raise forms.ValidationError(u'This username is already taken.')
 
         return data
+
 
     def clean_email(self):
         data = self.cleaned_data['email']
@@ -66,7 +63,7 @@ class RegistrationForm(forms.FormMixin, RegistrationFormUniqueEmail):
         password2 = self.cleaned_data['password2']
 
         if password1 and password1 != password2:
-            raise forms.ValidationError(u'Your password did not match.')
+            raise forms.ValidationError(u'Your passwords do not match.')
 
         return password2
 
@@ -77,12 +74,14 @@ class RegistrationForm(forms.FormMixin, RegistrationFormUniqueEmail):
         password = self.cleaned_data['password']
 
         user = User.objects.create_user(username, email, password)
+        user.is_active = False
+        user.save()
         profile, created = Profile.objects.get_or_create(user=user)
+        profile.send_activation_email()
 
 
     class Meta:
-        fields = ['email', 'password1', 'password2']
-
+        fields = ['email', 'password1', 'password2', 'accepted_terms']
 
 
 class AuthenticationForm(forms.Form):
@@ -137,3 +136,13 @@ class AuthenticationForm(forms.Form):
 
     def get_user(self):
         return self.user_cache
+
+
+class PasswordResetForm(forms.Form):
+
+    pass
+
+
+
+
+

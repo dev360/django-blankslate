@@ -25,12 +25,21 @@ def formfields(form, fields):
     new_form.fields = SortedDict(new_fields)
     return new_form
 
+
+@register.filter(name='field_type')
+def field_type(field, ftype):
+    try:
+        t = field.field.widget.__class__.__name__
+        return t.lower() == ftype
+    except:
+        return False
+
 @register.filter
 def is_active(request, url):
 	url = reverse(url)
 	if request == None:
 		return False
-	is_active = False	
+	is_active = False
 	current_url = request.path
 	if url != SafeUnicode('/'):
 		is_active = SafeUnicode(current_url).startswith(url)

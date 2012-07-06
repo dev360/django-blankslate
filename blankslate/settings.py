@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'tastypie',
 
     'api',
+    'auth',
     'core',
     'utils',
 )
