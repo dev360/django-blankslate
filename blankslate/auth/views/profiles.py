@@ -23,7 +23,7 @@ def profile_index(request):
 
     profile = get_object_or_404(Profile, user=request.user)
 
-    return render_to_response('core/profiles/index.html', {
+    return render_to_response('auth/profiles/index.html', {
         'profile': profile,
     }, RequestContext(request))
 
@@ -31,13 +31,13 @@ def profile_index(request):
 @login_required
 def profile_view(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    return render_to_response('core/profiles/view.html', {'profile': profile}, RequestContext(request))
+    return render_to_response('auth/profiles/view.html', {'profile': profile}, RequestContext(request))
 
 
 @login_required
 def profile_add(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    return render_to_response('core/profiles/add.html', {'profile': profile, 'form': form}, RequestContext(request))
+    return render_to_response('auth/profiles/add.html', {'profile': profile, 'form': form}, RequestContext(request))
 
 
 @login_required
@@ -186,13 +186,13 @@ def profile_edit(request):
 
     args['saved'] = saved
     args['validation_error'] = validation_error
-    return render_to_response('core/profiles/edit.html', args, RequestContext(request))
+    return render_to_response('auth/profiles/edit.html', args, RequestContext(request))
 
 
 @login_required
 def profile_search(request):
     profiles = []
-    return render_to_response('core/index.html', {'profiles': profiles}, RequestContext(request))
+    return render_to_response('auth/index.html', {'profiles': profiles}, RequestContext(request))
 
 
 
@@ -202,5 +202,5 @@ def users_index(request):
     args = {}
     args['invite_user1_form'] = InviteUserForm()
 
-    return render_to_response('core/profiles/users_index.html', args, RequestContext(request))
+    return render_to_response('auth/profiles/users_index.html', args, RequestContext(request))
 
