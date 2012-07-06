@@ -8,8 +8,9 @@
       <label class="checkbox">
         {{ field }}
         {{ field.label }}
+        {% for error in field.errors %}<span class="help-inline">{{ error }}</span>{% endfor %}
       </label>
-    {% for error in field.errors %}<span class="help-inline">{{ error }}</span>{% endfor %}
+    
     </div>
     {% endif %}
   {% else %}
