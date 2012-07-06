@@ -8,7 +8,7 @@ from django.forms.widgets import Select
 
 
 from registration.forms import RegistrationFormUniqueEmail
-from core.models import User, Profile
+from auth.models import User, Profile
 from utils import forms
 
 
