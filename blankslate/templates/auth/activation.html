@@ -1,0 +1,17 @@
+{% extends "base_full.html" %}
+{% load i18n %}
+
+{% block primary %}
+  <div class="hero-unit">
+    <h2>{% trans "Unable to activate account" %}</h2>
+    {% if status == 'already_active' %}
+    <p>{% trans "The activation link that you clicked belongs to an account that is already active." %}</p>
+    {% endif %}    
+    {% if status == 'invalid' %}
+    <p>{% trans "The activation link that you supplied is invalid or could be expired." %}</p>
+    {% endif %}
+
+	</div>
+{% endblock %}
+
+

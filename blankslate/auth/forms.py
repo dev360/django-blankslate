@@ -68,16 +68,25 @@ class RegistrationForm(forms.FormMixin, RegistrationFormUniqueEmail):
         return password2
 
 
-    def save(self, *args, **kwargs):
+    def save(self, request, **kwargs):
+
+        send_email = kwargs.get('send_email', True)
+
         username = self.cleaned_data['username']
         email = self.cleaned_data['email']
-        password = self.cleaned_data['password']
+        password = self.cleaned_data['password1']
 
         user = User.objects.create_user(username, email, password)
         user.is_active = False
         user.save()
         profile, created = Profile.objects.get_or_create(user=user)
-        profile.send_activation_email()
+
+        profile.set_activation_key()
+
+        if send_email:
+            profile.send_activation_email()
+
+        return user
 
 
     class Meta:

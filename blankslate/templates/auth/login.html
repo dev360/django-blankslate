@@ -12,6 +12,12 @@
 		{% endif %}
     <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="form-horizontal">{% csrf_token %}{% block form_top %}{% endblock %}
       {% csrf_token %}
+
+    {% if activated %}
+      <div class="alert alert-success">
+        {% trans "Your account was successfully activated and you can now login" %}
+      </div>
+    {% endif %}
     {% if form.errors %}
       <div class="alert alert-error">
       {% if form.non_field_errors %}
@@ -35,3 +41,13 @@
 	</div>
 {% endblock %}
 
+
+{% block extra_scripts %}
+    {% if activated %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#id_password').focus();
+      });
+    </script>
+    {% endif %}
+{% endblock %}

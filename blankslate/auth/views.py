@@ -35,9 +35,7 @@ def register(request):
         form = RegistrationForm(data)
 
         if form.is_valid():
-            user = form.save() #profile_callback=Member.objects.profile_callback)
-            profile = Profile(user=user)
-            profile.save()
+            user = form.save(request) #profile_callback=Member.objects.profile_callback)
             return HttpResponseRedirect(reverse('register_success'))
 
     return render_to_response('auth/register.html', {
@@ -49,8 +47,30 @@ def register_success(request):
     return render_to_response('auth/register_success.html', { }, RequestContext(request))
 
 
-def activate(request):
-    return render_to_response('auth/activate.html', { }, RequestContext(request))
+def activate(request, activation_key):
+
+    status = 'invalid'
+
+    try:
+        profile = Profile.objects.get(activation_key=activation_key, user__is_active=False)
+
+        if not profile.user.is_active:
+
+            profile.activation_key = ''
+            profile.save()
+
+            profile.user.is_active = True
+            profile.user.save()
+
+            url = '{0}?activated=1&email={1}'.format(reverse('auth_login'), profile.user.email)
+            return HttpResponseRedirect(url)
+
+        status = 'already_active'
+
+    except Profile.DoesNotExist:
+        profile = None
+
+    return render_to_response('auth/activation.html', { 'status': status }, RequestContext(request))
 
 
 def activate_success(request):
@@ -95,6 +115,8 @@ def login(request, template_name='auth/login.html',
           authentication_form=AuthenticationForm):
     """Displays the login form and handles the login action."""
 
+    activated = request.GET.get('activated', False)
+    email = request.GET.get('email')
     redirect_to = request.REQUEST.get(redirect_field_name, '')
 
     if request.method == "POST":
@@ -126,7 +148,7 @@ def login(request, template_name='auth/login.html',
             return HttpResponseRedirect(redirect_to)
 
     else:
-        form = authentication_form(request)
+        form = authentication_form(request, initial={ 'email': email })
 
     request.session.set_test_cookie()
 
@@ -140,5 +162,6 @@ def login(request, template_name='auth/login.html',
         redirect_field_name: redirect_to,
         'site': current_site,
         'site_name': current_site.name,
+        'activated': activated,
     }, context_instance=RequestContext(request))
 

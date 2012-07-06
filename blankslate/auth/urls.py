@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 	# Registration
 	url(r'^register/$', views.register, name='register'),
     url(r'^register/success/$', views.register_success, name='register_success',),
-	url(r'^activate/$', views.activate, name='activate'),
+	url(r'^activate/(?P<activation_key>([^/])+)/$', views.activate, name='activate'),
 	url(r'^activate/success/$', views.activate_success, name='activate_success'),
 
     # Login / logout
@@ -22,7 +22,6 @@ urlpatterns = patterns('',
     # Password reset
     url(r'^password/reset/$', views.password_reset, name='password_reset'),
     url(r'^password/form/$', views.password_form, name='password_reset_form'),
-
 
     # Invitations
 
