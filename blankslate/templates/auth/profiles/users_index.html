@@ -1,0 +1,44 @@
+{% extends "base_3-9.html" %}
+{% load i18n %}
+
+{% block primary %}
+  <div class="section">
+    <h1>{% trans "Manage Users" %}</h1>
+    {% with invite_user1_form as form %}
+    <h3>Inivite Users</h3>
+    <p>You can invite users to join
+    this organization by entering their
+    information below</p>
+    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="well form-inline">{% csrf_token %}{% block form_top %}{% endblock %}
+      {% csrf_token %}
+
+      {% if form.errors %}
+      <div class="alert alert-error">
+      {% if form.non_field_errors %}
+       {% for error in form.non_field_errors %}
+        {{error}}
+       {% endfor%}
+      {% else %}
+       {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %}
+      {% endif %}
+      </div>{% endif %}
+
+      {% for field in form %}
+        <span>
+        {{ field }}
+        {{ field.errors }}
+        </span>
+      {% endfor %}
+      <input type="submit" value="Invite" class="btn btn-primary" />
+    </form>
+
+    {% endwith %}
+
+    <hr />
+  </div>
+{% endblock %}
+
+{% block menu %}
+  {% include "core/includes/user_menu.html" %}
+{% endblock %}
+

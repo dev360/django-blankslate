@@ -46,6 +46,7 @@ urlpatterns = patterns('',
     url(r'^profile/users/$', views.users_index, name='users-index'),
 
     # Invitations
+    url(r'^profile/users/invite/$', views.users_invite, name='users-invite'),
 
     # User management
 

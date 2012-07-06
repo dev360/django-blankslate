@@ -84,35 +84,3 @@ class PhonenumberForm(forms.ModelForm):
     class Meta:
         model = Phonenumber
 
-
-class InviteUserForm(forms.Form):
-    """ Form for inviting users """
-
-    first_name = forms.CharField(label=_('First Name'), max_length=128, required=False)
-    last_name = forms.CharField(label=_('Last Name'), max_length=128, required=False)
-    email = forms.CharField(label=_('Email'), max_length=255)
-
-    def clean_email(self):
-        data = self.cleaned_data['email']
-
-        try:
-            user = User.objects.get(email__iexact=data)
-
-            try:
-                user_organization = user.user_organizations.all()[0]
-            except IndexError:
-                user_organization = None
-
-            try:
-                your_organization = request.user.user_organizations.all()[0]
-            except IndexError:
-                your_organization = None
-
-            if user_organization and user_organization == your_organization:
-                raise forms.ValidationError(_('The user is already in your organization.'))
-            else:
-                raise forms.ValidationError(_('The user already belongs to another organization.'))
-
-        except User.DoesNotExist:
-            return data
-
