@@ -10,14 +10,15 @@ from auth import views
 urlpatterns = patterns('',
 
 	# Registration
-	url(r'^register/$', views.register, name='register'),
-    url(r'^register/success/$', views.register_success, name='register_success',),
-	url(r'^activate/(?P<activation_key>([^/])+)/$', views.activate, name='activate'),
-	url(r'^activate/success/$', views.activate_success, name='activate_success'),
+	url(r'^accounts/register/$', views.register, name='register'),
+    url(r'^accounts/register/success/$', views.register_success, name='register_success',),
+	url(r'^accounts/activate/(?P<activation_key>([^/])+)/$', views.activate, name='activate'),
+	url(r'^accounts/activate/success/$', views.activate_success, name='activate_success'),
 
     # Login / logout
-    url(r'^login/$', views.login, name='auth_login'),
-    url(r'^logout/$', views.logout, name='auth_logout'),
+    # Dont change these paths.. it will break.
+    url(r'^accounts/login/$', views.login, name='auth_login'),
+    url(r'^accounts/logout/$', views.logout, name='auth_logout'),
 
     # Password reset stuff
     url(r'^password/change/$',
@@ -43,6 +44,7 @@ urlpatterns = patterns('',
     # Profiles
     url(r'^profile/$', views.profile_index, name='profile-index'),
     url(r'^profile/edit/$', views.profile_edit, name='profile-edit'),
+    url(r'^profile/contact/edit/$', views.profile_contact_edit, name='profile-contact-edit'),
 
     # User management
     url(r'^profile/users/$', views.users_index, name='users-index'),

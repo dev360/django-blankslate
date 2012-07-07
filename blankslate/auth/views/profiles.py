@@ -40,8 +40,44 @@ def profile_add(request, slug):
     return render_to_response('auth/profiles/add.html', {'profile': profile, 'form': form}, RequestContext(request))
 
 
+
 @login_required
 def profile_edit(request):
+    profile = get_object_or_404(Profile, user__id=request.user.id)
+
+    form = ProfileForm(instance=profile, initial={  })
+
+    saved = False
+    validation_error = False
+
+    if request.method == 'POST':
+        data = request.POST
+        files = request.FILES
+        form = ProfileForm(data, files, instance=profile)
+
+        if form.is_valid():
+            # Save profile.
+            profile = form.save(user=request.user)
+            profile.status = 'REG'
+            profile.save()
+            saved = True
+
+            form = ProfileForm(instance=profile, initial={  })
+
+        else:
+            validation_error = True
+
+    args = {}
+    args['profile'] = profile
+    args['form'] = form
+
+    args['saved'] = saved
+    args['validation_error'] = validation_error
+    return render_to_response('auth/profiles/edit.html', args, RequestContext(request))
+
+
+@login_required
+def profile_contact_edit(request):
     profile = get_object_or_404(Profile, user__id=request.user.id)
 
     #
@@ -186,7 +222,7 @@ def profile_edit(request):
 
     args['saved'] = saved
     args['validation_error'] = validation_error
-    return render_to_response('auth/profiles/edit.html', args, RequestContext(request))
+    return render_to_response('auth/profiles/edit_contact.html', args, RequestContext(request))
 
 
 @login_required

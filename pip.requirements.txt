@@ -8,6 +8,7 @@ aino-jstools==0.1.0.6
 anyjson==0.3.1
 boto==2.0
 distribute==0.6.27
+django-boto==0.1.6b
 django-picklefield==0.1.9
 django-registration==0.8
 django-shrink==0.0.3.2

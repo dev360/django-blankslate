@@ -14,6 +14,18 @@ class ProfileForm(forms.ModelForm):
 
     same_address = forms.BooleanField(label=_(u'Mailing address is the same as the physical address.'), required=False,)
 
+    def __init__(self, *args, **kwargs):
+
+        self.user = kwargs.pop('user', None)
+
+        super(ProfileForm, self).__init__(*args, **kwargs)
+
+        # Want to use placeholder for these fields ...
+        self.fields['first_name'].widget.attrs = { 'placeholder': self.fields['first_name'].label }
+        self.fields['middle_name'].widget.attrs = { 'placeholder': self.fields['middle_name'].label }
+        self.fields['last_name'].widget.attrs = { 'placeholder': self.fields['last_name'].label }
+        self.fields['job_title'].widget.attrs = { 'placeholder': self.fields['job_title'].label }
+        self.fields['company'].widget.attrs = { 'placeholder': self.fields['company'].label }
 
     def save(self, user=None):
         if not user:

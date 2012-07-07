@@ -1,0 +1,74 @@
+{% extends "base_3-9.html" %}
+{% load i18n utils %}
+
+{% block primary %}
+  <div class="section profile edit">
+    <h1>Manage Profile</h1>
+    <br />
+    <ul class="nav nav-tabs">
+      <li><a href="{% url profile-edit %}">{% trans "Profile" %}</a></li>
+      <li class="active"><a href="{% url profile-contact-edit %}">{% trans "Contact" %}</a></li>
+    </ul>
+    <div>
+      <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="form-horizontal">{% csrf_token %}{% block form_top %}{% endblock %}
+        {% csrf_token %}
+
+      {% if saved %}
+        <div class="alert alert-success">
+          {% trans "Your changes have been saved." %}
+        </div>
+      {% endif %}
+      {% if validation_error %}
+        <div class="alert alert-error">
+          {% trans "Please correct the errors below:" %}
+        </div>
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="alert alert-error">
+          {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %} 
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+        <fieldset>
+          <div>
+              <h4>Phone Numbers</h4>    
+          </div>
+          <div>
+              {% include "core/includes/phonenumber_form.html" with form=phone1_form %}
+          </div>
+          <div>
+              {% include "core/includes/phonenumber_form.html" with form=phone2_form %}
+          </div>
+          <div>
+              {% include "core/includes/phonenumber_form.html" with form=phone3_form %}
+          </div>
+          <div>
+              <h4>Physical Address</h4>
+              {% include "core/includes/address_form.html" with form=address1_form %}
+          </div>
+          <div class="control-group">
+              <h4>Mailing Address</h4>
+              <div class="form-row">
+                  {{ form|formfields:"same_address" }}
+              </div>
+              <div id="mailing-address">
+              {% include "core/includes/address_form.html" with form=address2_form %}
+          </div>
+
+            <div class="form-actions">
+              <input class="btn btn-primary" type="submit" value="{% trans "Save Profile" %}" />
+            </div>
+          </fieldset>
+        </form>
+    </div>
+
+  </div>
+{% endblock %}
+
+{% block menu %}
+  {% include "core/includes/user_menu.html" %}
+{% endblock %}
+
+

@@ -22,6 +22,8 @@ except ImportError:
 from django.contrib.localflavor.us.models import USStateField, USPostalCodeField, \
         PhoneNumberField
 
+from django_boto.s3.storage import S3Storage
+
 from utils.models import GUIDModel
 
 
@@ -210,6 +212,10 @@ class Profile(GUIDModel):
     last_name = models.CharField(_('Last Name'), default='', max_length=128)
     middle_name = models.CharField(_('Middle Initial'), default='', blank=True, max_length='64')
     company = models.CharField(_('Company Name'), max_length='255', default='')
+    job_title = models.CharField(_('Job Title'), max_length=128, default='', blank=True)
+
+    image = models.ImageField(_('Profile image'), upload_to='profiles', blank=True, null=True, \
+            storage=S3Storage())
 
     addresses = models.ManyToManyField(Address, verbose_name=_('addresses'), related_name='profiles', blank=True)
     phone_numbers = models.ManyToManyField(Phonenumber, verbose_name=_('phone numbers'), related_name='profiles', blank=True)

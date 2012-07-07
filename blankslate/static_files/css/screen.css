@@ -3,5 +3,17 @@
 .form-inline .control-group { display: inline-block; vertical-align: top; }
 .form-inline .control-group p.help-block { margin-top: 3px; }
 
+.nav-tabs .disabled a { color: #999; }
+
+
+.form-row { margin-bottom: 10px; }
+
 #invite-user .control-group input { width: 130px; }
 
+
+
+.profile.edit #id_first_name,
+.profile.edit #id_last_name { width: 140px; }
+.profile.edit #id_middle_name { width: 80px; }
+
+.profile.edit .profile-image { width: 175px; margin-right: 10px; } 

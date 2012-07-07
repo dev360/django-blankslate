@@ -6,25 +6,24 @@
     <h1>Manage Profile</h1>
     <br />
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#">{% trans "Profile" %}</a></li>
-      <li><a href="#">{% trans "Contact" %}</a></li>
+      <li class="active"><a href="{% url profile-edit %}">{% trans "Profile" %}</a></li>
+      {% if profile.status == 'REG' %}
+        <li><a href="{% url profile-contact-edit %}">{% trans "Contact" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">{% trans "Contact" %}</a></li>
+      {% endif %}
     </ul>
 
     <div id="account-form">
     </div>
 
     <div>
-      <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="form-horizontal">{% csrf_token %}{% block form_top %}{% endblock %}
+      <form enctype="multipart/form-data" action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" class="form-inline">{% csrf_token %}{% block form_top %}{% endblock %}
         {% csrf_token %}
 
       {% if saved %}
         <div class="alert alert-success">
           {% trans "Your changes have been saved." %}
-        </div>
-      {% endif %}
-      {% if validation_error %}
-        <div class="alert alert-error">
-          {% trans "Please correct the errors below:" %}
         </div>
       {% endif %}
 
@@ -33,59 +32,55 @@
           {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below:{% endblocktrans %} 
           {{ form.non_field_errors }}
         </div>
+      {% else %}
+       {% if profile.status == 'NEW' %}
+        <div class="alert alert-warning">
+          <strong>{% trans "Please note:" %}</strong> {% trans "Some functionality on the site may be restricted until you complete your profile below" %}
+        </div>
+       {% endif %}
       {% endif %}
+        <div class="profile-image pull-left">
+          <div class="thumbnail">
+           {% if profile.image %}
+             <img src="{{ profile.image.url }}" alt="">
+           {% else %}
+            <img src="http://placehold.it/175x175" alt="">
+            {% endif %}
+            <div class="caption">
+              <h5>Profile image</h5>
+              <p>Upload a profile image of yourself so other users of the site can recognize you.</p>
 
-
-
-
-        
-
+              {% if profile.image %}
+              <div class="btn-group ">
+                <a class="btn btn-primary" href="#"><i class="icon-picture icon-white"></i> Image</a>
+                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+                  <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+                </ul>
+              </div>
+              {% else %}
+                {{ form|formfields:"image" }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
         <fieldset>
-          <h3>General information</h3>
           <div class="form-row names">
             {{ form|formfields:"first_name,middle_name,last_name" }}
-          </div>      
-          <div class="form-row names">
+          </div>
+          <hr />
+          <div class="form-row">
+            {{ form|formfields:"job_title" }}
+          </div>   
+          <div class="form-row">
             {{ form|formfields:"company" }}
           </div>
+          <div class="form-actions">
+            <input class=" btn btn-primary" type="submit" value="{% trans "Save" %}" />
+          </div>
         </fieldset>
-
-        <fieldset>
-          <h3>Contact information</h3>
-          <div>
-              <h4>Phone Numbers</h4>    
-          </div>
-          <div>
-              {% include "core/includes/phonenumber_form.html" with form=phone1_form %}
-          </div>
-          <div>
-              {% include "core/includes/phonenumber_form.html" with form=phone2_form %}
-          </div>
-          <div>
-              {% include "core/includes/phonenumber_form.html" with form=phone3_form %}
-          </div>
-          <div>
-              <h4>Physical Address</h4>
-              {% include "core/includes/address_form.html" with form=address1_form %}
-          </div>
-          <div class="control-group">
-              <h4>Mailing Address</h4>
-              <div class="form-row">
-                  {{ form|formfields:"same_address" }}
-              </div>
-              <div id="mailing-address">
-              {% include "core/includes/address_form.html" with form=address2_form %}
-          </div>
-
-            <div class="form-actions">
-              <span class="primary btn ()"><input type="submit" value="{% trans "Save Profile" %}" /></span>
-            </div>
-          </fieldset>
         </form>
-    </div>
-
-    <div id="certification-confirm" title="Do you want to leave this page?" style="display: none;">
-      <p>Test</p>
     </div>
   </div>
 {% endblock %}
