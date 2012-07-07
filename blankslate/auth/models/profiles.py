@@ -279,7 +279,7 @@ class Profile(GUIDModel):
         ctx_dict = {'activation_url': url,
                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
                     'SITE_NAME': SITE_NAME}
-        subject = render_to_string('registration/activation_email_subject.txt',
+        subject = render_to_string('auth/activation_email_subject.txt',
                                    ctx_dict)
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())

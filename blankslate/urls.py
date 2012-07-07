@@ -10,8 +10,6 @@ urlpatterns = patterns('',
     (r'', include('auth.urls', )),
     (r'', include('core.urls', )), #namespace='core', app_name='core')),
 
-    #(r'^users/', include('registration.urls')),
-
     (r'^jstools/', include('jstools.urls')),
     (r'^admin/', include(admin.site.urls)),
 

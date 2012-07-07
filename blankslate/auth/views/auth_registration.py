@@ -22,9 +22,6 @@ from auth.models import Profile
 from auth.forms import AuthenticationForm, RegistrationForm
 
 
-def index(request):
-    return render_to_response('core/index.html', {}, RequestContext(request))
-
 @transaction.commit_on_success
 def register(request):
     """ Registers a member """
@@ -52,12 +49,9 @@ def activate(request, activation_key):
     status = 'invalid'
 
     try:
-        profile = Profile.objects.get(activation_key=activation_key, user__is_active=False)
+        profile = Profile.objects.get(activation_key=activation_key)
 
         if not profile.user.is_active:
-
-            profile.activation_key = ''
-            profile.save()
 
             profile.user.is_active = True
             profile.user.save()
