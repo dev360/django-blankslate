@@ -119,4 +119,6 @@ from settingslocal import *
 DEBUG = True if ENVIRONMENT == 'dev' else False
 TEMPLATE_DEBUG = DEBUG
 
+USE_CDN = False if ENVIRONMENT == 'dev' else True
+
 MEDIA_URL = '{0}/media/'.format(BASE_URL)
